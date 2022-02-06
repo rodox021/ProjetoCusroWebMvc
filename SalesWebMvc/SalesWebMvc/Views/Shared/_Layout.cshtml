@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SalesWebMvc</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-          @*<link href="~/css/all.min.css" rel="stylesheet" />
-    <link href="~/css/fontawesome.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/css/MyStyle.css" />
+    @*<link href="~/css/all.min.css" rel="stylesheet" />
+        <link href="~/css/fontawesome.min.css" rel="stylesheet" />*@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-cosmo.css" />
@@ -29,29 +30,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SalesWebMvc</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><i class="fab fa-product-hunt fa-lg"></i> SalesWebMvc</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Departments" asp-action="Index">Departamento</a></li>
-                    <li><a asp-area="" asp-controller="Sellers" asp-action="Index">Vendendor</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Sellers" asp-action="Index">Vendedor</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
             </div>
         </div>
-    </nav><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    </nav>
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
-      
+
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2022 - SalesWebMvc</p>
+            <p>&copy; 2022 - Rodolfo Braga - Denvolvido com Am<i class="fa fa-heart color-red"></i>r </p>
         </footer>
     </div>
 
@@ -75,7 +75,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         @*<script src="~/js/all.min.js"></script>
-        <script src="~/js/fontawesome.min.js"></script>*@
+            <script src="~/js/fontawesome.min.js"></script>*@
     </environment>
 
     @RenderSection("Scripts", required: false)

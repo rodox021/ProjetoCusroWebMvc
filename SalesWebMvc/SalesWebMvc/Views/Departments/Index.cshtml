@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+               Nome
             </th>
             <th></th>
         </tr>
@@ -26,9 +26,9 @@
             </td>
             <td>
             
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit fa-lg"></i></a>
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-info fa-lg"></i></a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash fa-lg"></i></a>
+                <a class="btn btn-warning mr-15" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit fa-lg"></i></a>
+                <a class="btn btn-info mr-15" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-info fa-lg"></i></a>
+                <a class="btn btn-danger mr-15s" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash fa-lg"></i></a>
             </td>
         </tr>
 }
