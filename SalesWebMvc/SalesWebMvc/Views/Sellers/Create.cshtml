@@ -1,40 +1,47 @@
-﻿@model SalesWebMvc.Models.Seller
+﻿@model SalesWebMvc.Models.ViewModels.SellerFormViewModel
 @{
     ViewData["Title"] = "Novo Cadastro";
 }
 
 <h2 class="jumbotron">@ViewData["Title"]</h2>
 <h4> <i class="fas fa-plus fa-2x"> Vendedor </i> </h4>
-<hr/>
+<hr />
 <div class="row">
 
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Name">Nome</label>
-                <input asp-for="Name" class="form-control" placeholder="Seu Nome Completo">
+                <label asp-for="Seller.Name">Nome</label>
+                <input asp-for="Seller.Name" class="form-control" placeholder="Seu Nome Completo">
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
             </div>
             <div class="form-group">
-                <label asp-for="Email">Endereço de email</label>
-                <input asp-for="Email" type="email" class="form-control" placeholder="Seu email">
+                <label asp-for="Seller.Email">Endereço de email</label>
+                <input asp-for="Seller.Email" type="email" class="form-control" placeholder="Seu email">
                 <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
             </div>
             <div class="form-group">
-                <label asp-for="BirthDate">Data de Nascimento</label>
-                <input asp-for="BirthDate" class="form-control">
+                <label asp-for="Seller.BirthDate">Data de Nascimento</label>
+                <input asp-for="Seller.BirthDate" class="form-control">
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
             </div>
             <div class="form-group">
-                <label asp-for="BaseSalary">Salário Base</label>
-                <input asp-for="BaseSalary" class="form-control" placeholder="Ex: 1000.00">
+                <label asp-for="Seller.BaseSalary">Salário Base</label>
+                <input asp-for="Seller.BaseSalary" class="form-control" placeholder="Ex: 1000.00">
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Seller.DepartmentId" class="control-label"></label>
+                <select asp-for="Seller.DepartmentId"
+                        asp-items="@(new SelectList(Model.Departments,"Id","Name"))"
+                        class="form-control">
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
             <a asp-action="Index" class="btn btn-danger">
-               Cancelars
+                Cancelar
             </a>
         </form>
-       
+
     </div>
 </div>
