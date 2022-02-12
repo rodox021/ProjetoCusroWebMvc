@@ -13,6 +13,7 @@ namespace SalesWebMvc.Controllers
     {
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
+        
 
 
         public SellersController(SellerService sellerService, DepartmentService departmentService)
@@ -23,8 +24,18 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Index()
         {
+            var department = _departmentService.FindAll();
             var list = _sellerService.FindAll();
-            return View(list);
+
+            var l = from s in list
+                    join d in department on s.DepartmentId equals d.Id
+                    select new Seller(s.Id, s.Name, s.Email, s.BirthDate, s.BaseSalary, d);
+                                        
+                                   
+                    
+            var viewModel = new SellerFormDepartment { Sellers = list, Departments = department };
+
+            return View(l);
         }
         public IActionResult Create()
         {
