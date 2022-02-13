@@ -1,0 +1,49 @@
+﻿@model SalesWebMvc.Models.Seller
+@{
+    ViewData["title"] = "Info do Vendedor";
+}
+
+<h2> @ViewData["title"]</h2>
+
+<div>
+    <h4>Vendedor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Nome:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            Aniversário:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt>
+            Salário Base:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BaseSalary)
+        </dd>
+        <dt>
+           Departamento: 
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+    </dl>
+
+</div>
+<div>
+    <a class="btn btn-default" asp-action="Edit">Editar</a>
+    <a class="btn btn-default" asp-action="Index">Cancelar</a>
+</div>

@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Sellers\Details.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Sellers\Index1.cshtml" />
     <Content Remove="wwwroot\css\StyleSheet.css" />
   </ItemGroup>
 
