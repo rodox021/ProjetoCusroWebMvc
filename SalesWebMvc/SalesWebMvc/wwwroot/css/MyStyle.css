@@ -4,3 +4,9 @@
 }.color-red{
      color:red;
  }
+.my-padding {
+    padding: 20px;
+    color:white;
+    border-radius: 10px ;
+}
+
