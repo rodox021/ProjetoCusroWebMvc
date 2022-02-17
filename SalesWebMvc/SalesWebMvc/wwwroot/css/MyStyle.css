@@ -16,4 +16,8 @@
 .nav-logo{
     display:flex;
 }
+.erro{
+    display:flex;
+    flex-direction:column;
+}
 

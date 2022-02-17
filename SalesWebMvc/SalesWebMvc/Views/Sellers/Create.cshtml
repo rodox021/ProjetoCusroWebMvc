@@ -10,24 +10,31 @@
 
     <div class="col-md-4">
         <form asp-action="Create">
+
             <div class="form-group">
                 <label asp-for="Seller.Name">Nome</label>
                 <input asp-for="Seller.Name" class="form-control" placeholder="Seu Nome Completo">
+                <span asp-validation-for="Seller.Name" class="text-danger"></span>
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
             </div>
             <div class="form-group">
                 <label asp-for="Seller.Email">Endereço de email</label>
                 <input asp-for="Seller.Email" type="email" class="form-control" placeholder="Seu email">
-                <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+                <div class="erro">
+                    <span asp-validation-for="Seller.Email" class="text-danger"></span>
+                    <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Seller.BirthDate">Data de Nascimento</label>
                 <input asp-for="Seller.BirthDate" class="form-control">
+                <span asp-validation-for="Seller.BirthDate" class="text-danger"></span>
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
             </div>
             <div class="form-group">
                 <label asp-for="Seller.BaseSalary">Salário Base</label>
                 <input asp-for="Seller.BaseSalary" class="form-control" placeholder="Ex: 1000.00">
+                <span asp-validation-for="Seller.BaseSalary" class="text-danger"></span>
                 @*<small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>*@
             </div>
             <div class="form-group">
@@ -45,3 +52,6 @@
 
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

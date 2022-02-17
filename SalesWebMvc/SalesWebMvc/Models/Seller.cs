@@ -11,24 +11,42 @@ namespace SalesWebMvc.Models
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
+        [Required(ErrorMessage = "{0} Obrigátorio")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} deve ter o tamanho minino de {2} e máximo de {1}")]
         public string Name { get; set; }
 
+
+
         [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "{0} Obrigátorio")]
+        [EmailAddress(ErrorMessage = "Entre com um e-mail válido")]
         public string Email { get; set; }
+
+
 
 
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString ="{0: dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
+        [Required(ErrorMessage = "{0} Obrigátorio")]
         public DateTime BirthDate { get; set; }
 
+
+
         [Display(Name = "Salário Base")]
-       [DataType(DataType.Currency)] // mostra o campo com o valor formatado para sua região que configurado no startuo, R$ 1000,00
-       //[DisplayFormat(DataFormatString = "{0:F2}")] // vai mostrar o campo com o valor separado com 2 casa decimais 1000,00
+        [DataType(DataType.Currency)] // mostra o campo com o valor formatado para sua região que configurado no startuo, R$ 1000,00
+        //[DisplayFormat(DataFormatString = "{0:F2}")] // vai mostrar o campo com o valor separado com 2 casa decimais 1000,00
+        [Range(100.0, 50000.0, ErrorMessage = "{0} deve ser entre {1} até {2}")]
+        [Required(ErrorMessage = "{0} Obrigátorio")]
         public double BaseSalary { get; set; }
+
+
 
         [Display(Name = "Departamento")]
         public Department Department { get; set; }
+
+
+
 
         [Display(Name = "Departamento")]
         public int DepartmentId { get; set; }
@@ -54,7 +72,7 @@ namespace SalesWebMvc.Models
             Sales.Remove(sr);
         }
 
-        public double TotalSales (DateTime i, DateTime f)
+        public double TotalSales(DateTime i, DateTime f)
         {
             return Sales.Where(sr => sr.Date >= i && sr.Date <= f).Sum(sr => sr.Amount);
         }
