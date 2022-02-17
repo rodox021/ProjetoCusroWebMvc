@@ -9,4 +9,11 @@
     color:white;
     border-radius: 10px ;
 }
+.logo-img{
+    width:50px;
+    margin-right: 5px;
+}
+.nav-logo{
+    display:flex;
+}
 
