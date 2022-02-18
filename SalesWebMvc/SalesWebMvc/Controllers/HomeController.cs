@@ -17,7 +17,8 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Projeto de Vendas em Web MVC Net Core do Curso C#";
+            ViewData["Message"] = "Projeto de Vendas em Web MVC Net 2.1 Core EF do Curso C#";
+
             ViewData["Professor"] = "Nelio Alves";
 
             return View();
@@ -25,7 +26,10 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Rodolfo Braga";
+            ViewData["Tel"] = "21 98747-8049";
+            ViewData["LinkWA"] = "https://wa.me/5521987478049";
+            ViewData["Linkdin"] = "https://www.linkedin.com/in/rodolfolealbraga";
 
             return View();
         }

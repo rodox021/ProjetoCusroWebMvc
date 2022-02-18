@@ -16,8 +16,17 @@
 .nav-logo{
     display:flex;
 }
-.erro{
-    display:flex;
-    flex-direction:column;
+.erro {
+    display: flex;
+    flex-direction: column;
 }
+.my-link:hover {
+    text-decoration: none;
+    color: #333;
+}
+.my-link{
+    text-decoration:none;
+    color: #333;
+}
+
 
