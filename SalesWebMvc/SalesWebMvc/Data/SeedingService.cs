@@ -22,22 +22,29 @@ namespace SalesWebMvc.Data
         {
 
             // primeiro temos que testar para saber se o bd está vazio caso não esteja, não fazer nada
-            if(_context.Seller.Any() || _context.Department.Any() || _context.SalesRecords.Any())
+            if(_context.Seller.Any() || _context.Department.Any() || _context.SalesRecords.Any() || _context.CategoryAcesses.Any())
             {
                 return;
             }
+
+            CategoryAcess ac1 = new CategoryAcess(1, "Acesso total ao sistema ", Access.ADMIN);
+            CategoryAcess ac2 = new CategoryAcess(2, "Acesso total a lançar vendas ", Access.SELLER);
+            CategoryAcess ac3 = new CategoryAcess(3, "Acesso somente a relatórios de vendas ", Access.REPORT);
 
             Department d1 = new Department(1, "Computers");
             Department d2 = new Department(2, "Electronics");
             Department d3 = new Department(3, "Fashion");
             Department d4 = new Department(4, "Books");
 
-            Seller s1 = new Seller(1, "Bob Brown", "bob@gmail.com", new DateTime(1998, 4, 21), 1000.0, d1);
-            Seller s2 = new Seller(2, "Maria Green", "maria@gmail.com", new DateTime(1979, 12, 31), 3500.0, d2);
-            Seller s3 = new Seller(3, "Alex Grey", "alex@gmail.com", new DateTime(1988, 1, 15), 2200.0, d1);
-            Seller s4 = new Seller(4, "Martha Red", "martha@gmail.com", new DateTime(1993, 11, 30), 3000.0, d4);
-            Seller s5 = new Seller(5, "Donald Blue", "donald@gmail.com", new DateTime(2000, 1, 9), 4000.0, d3);
-            Seller s6 = new Seller(6, "Alex Pink", "bob@gmail.com", new DateTime(1997, 3, 4), 3000.0, d2);
+            Seller s1 = new Seller(1, "Bob Brown", "bob@gmail.com","bob123", new DateTime(1998, 4, 21), 1000.0, d1, ac2);
+            Seller s2 = new Seller(2, "Maria Green", "maria@gmail.com","maria123", new DateTime(1979, 12, 31), 3500.0, d2,ac2);
+            Seller s3 = new Seller(3, "Alex Grey", "alex@gmail.com","alex123", new DateTime(1988, 1, 15), 2200.0, d1, ac2);
+            Seller s4 = new Seller(4, "Martha Red", "martha@gmail.com","martha123", new DateTime(1993, 11, 30), 3000.0, d4, ac2);
+            Seller s5 = new Seller(5, "Donald Blue", "donald@gmail.com","donald123", new DateTime(2000, 1, 9), 4000.0, d3, ac2);
+            Seller s6 = new Seller(6, "Alex Pink", "bob@gmail.com","alex123," ,new DateTime(1997, 3, 4), 3000.0, d2, ac2);
+            Seller s7 = new Seller(7, "Rodolfo Braga", "rodox021@gmail.com", "050184", new DateTime(1984, 3, 4), 3000.0, d1, ac1);
+            Seller s8 = new Seller(8, "Rodolfo Leal", "rodox021@hotmail.com","050184", new DateTime(1984, 3, 4), 3000.0, d1, ac3);
+
 
             SalesRecord r1 = new SalesRecord(1, new DateTime(2018, 09, 25), 11000.0,    SalesStatus.Billed, s1);
             SalesRecord r2 = new SalesRecord(2, new DateTime(2018, 09, 4), 7000.0,      SalesStatus.Billed, s5);
@@ -70,9 +77,10 @@ namespace SalesWebMvc.Data
             SalesRecord r29 = new SalesRecord(29, new DateTime(2018, 10, 23), 12000.0,  SalesStatus.Billed, s5);
             SalesRecord r30 = new SalesRecord(30, new DateTime(2018, 10, 12), 5000.0,   SalesStatus.Billed, s2);
 
+            _context.CategoryAcesses.AddRange(ac1, ac2, ac3);
             _context.Department.AddRange(d1, d2, d3, d4);
 
-            _context.Seller.AddRange(s1, s2, s3, s4, s5, s6);
+            _context.Seller.AddRange(s1, s2, s3, s4, s5, s6,s7,s8);
 
             _context.SalesRecords.AddRange(
                 r1, r2, r3, r4, r5, r6, r7, r8, r9, r10,

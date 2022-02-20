@@ -9,8 +9,8 @@ using SalesWebMvc.Data;
 namespace SalesWebMvc.Migrations
 {
     [DbContext(typeof(SalesWebMvcContext))]
-    [Migration("20220209013437_DepartmentId")]
-    partial class DepartmentId
+    [Migration("20220220222542_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,21 @@ namespace SalesWebMvc.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("SalesWebMvc.Models.CategoryAcess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Access");
+
+                    b.Property<string>("Desc")
+                        .HasMaxLength(1000);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryAcesses");
+                });
 
             modelBuilder.Entity("SalesWebMvc.Models.Department", b =>
                 {
@@ -60,13 +75,24 @@ namespace SalesWebMvc.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
+                    b.Property<int>("CategoryAcessId");
+
                     b.Property<int>("DepartmentId");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryAcessId");
 
                     b.HasIndex("DepartmentId");
 
@@ -82,6 +108,11 @@ namespace SalesWebMvc.Migrations
 
             modelBuilder.Entity("SalesWebMvc.Models.Seller", b =>
                 {
+                    b.HasOne("SalesWebMvc.Models.CategoryAcess", "CategoryAcess")
+                        .WithMany("Sellers")
+                        .HasForeignKey("CategoryAcessId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("SalesWebMvc.Models.Department", "Department")
                         .WithMany("Sellers")
                         .HasForeignKey("DepartmentId")

@@ -10,20 +10,28 @@ namespace SalesWebMvc.Models
     {
         public int Id { get; set; }
 
+
+        //------------------------------------Name------------------------------------------
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "{0} Obrigátorio")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} deve ter o tamanho minino de {2} e máximo de {1}")]
         public string Name { get; set; }
 
-
+        //--------------------------------------Email----------------------------------------
 
         [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "{0} Obrigátorio")]
         [EmailAddress(ErrorMessage = "Entre com um e-mail válido")]
         public string Email { get; set; }
 
+        //--------------------------------------Passwword----------------------------------------
 
-
+        [Display(Name = "Senha")]
+        [Required(ErrorMessage = "Campo Obrigátorio")]
+        [StringLength(10, MinimumLength = 3, ErrorMessage = "{0} deve ter o tamanho minino de {2} e máximo de {1}")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        //-----------------------------------BirthDate-------------------------------------------
 
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date)]
@@ -31,7 +39,7 @@ namespace SalesWebMvc.Models
         [Required(ErrorMessage = "{0} Obrigátorio")]
         public DateTime BirthDate { get; set; }
 
-
+        //----------------------------------BaseSalary--------------------------------------------
 
         [Display(Name = "Salário Base")]
         [DataType(DataType.Currency)] // mostra o campo com o valor formatado para sua região que configurado no startuo, R$ 1000,00
@@ -40,37 +48,60 @@ namespace SalesWebMvc.Models
         [Required(ErrorMessage = "{0} Obrigátorio")]
         public double BaseSalary { get; set; }
 
-
+        //-----------------------------------Department-------------------------------------------
 
         [Display(Name = "Departamento")]
         public Department Department { get; set; }
 
 
-
-
         [Display(Name = "Departamento")]
         public int DepartmentId { get; set; }
-        public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
+        //-----------------------------------List Sales-------------------------------------------
+        public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
+        //------------------------------------------------------------------------------
+
+        public int CategoryAcessId { get; set; }
+        public CategoryAcess CategoryAcess { get; set; }
+        //------------------------------------------------------------------------------
+
+        //------ Construtor -------------------
         public Seller() { }
 
-        public Seller(int id, string name, string email, DateTime birthDate, double baseSalary, Department department)
+        public Seller(int id, string name, string email, string password, DateTime birthDate, double baseSalary, Department department, CategoryAcess categoryAcess)
         {
             Id = id;
             Name = name;
             Email = email;
+            Password = password;
             BirthDate = birthDate;
             BaseSalary = baseSalary;
             Department = department;
+            CategoryAcess = categoryAcess;
         }
+
+        //public Seller(int id, string name, string email, DateTime birthDate, double baseSalary, Department department)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Email = email;
+        //    BirthDate = birthDate;
+        //    BaseSalary = baseSalary;
+        //    Department = department;
+        //}
+
+
+        //----------------------------Metódos--------------------------------------------------
         public void AddSales(SalesRecord sr)
         {
             Sales.Add(sr);
         }
+        //------------------------------------------------------------------------------
         public void RemoveSales(SalesRecord sr)
         {
             Sales.Remove(sr);
         }
+        //------------------------------------------------------------------------------
 
         public double TotalSales(DateTime i, DateTime f)
         {

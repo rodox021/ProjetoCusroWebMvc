@@ -15,23 +15,28 @@ namespace SalesWebMvc.Controllers
     {
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
+        private readonly CategoryAcessService _categoryAcessService;
         
 
 
-        public SellersController(SellerService sellerService, DepartmentService departmentService)
+        public SellersController(SellerService sellerService, DepartmentService departmentService, CategoryAcessService categoryAcessService)
         {
             _sellerService = sellerService;
             _departmentService = departmentService;
+            _categoryAcessService = categoryAcessService;
         }
         //-----------------------------------------------------------------
         public async Task<IActionResult> Index()
         {
             var department = await _departmentService.FindAllAsync();
+            
             var list = await _sellerService.FindAllAsync();
+            var categoryAcess = await _categoryAcessService.FindAllAsync();
 
             var l = from s in list
                     join d in department on s.DepartmentId equals d.Id
-                    select new Seller(s.Id, s.Name, s.Email, s.BirthDate, s.BaseSalary, d);
+                    join a in categoryAcess on s.CategoryAcessId equals a.Id
+                    select new Seller(s.Id, s.Name, s.Email,s.Password, s.BirthDate, s.BaseSalary, d, a);
                                         
                                    
                     
@@ -161,6 +166,11 @@ namespace SalesWebMvc.Controllers
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             };
             return View(viewModel);
+        }
+        //------------------------------Login-----------------------------------
+        public IActionResult Login()
+        {
+            return View();
         }
     }
 }

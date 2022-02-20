@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Services;
 using SalesWebMvc.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SalesWebMvc
 {
@@ -39,6 +40,11 @@ namespace SalesWebMvc
                 
             });
 
+            services.AddSession(op => op.IdleTimeout = TimeSpan.FromMinutes(15));// tempo osioso para deslogar
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(op => {
+                op.LoginPath = "/Sellers/Login";
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -46,10 +52,13 @@ namespace SalesWebMvc
                     options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
                         builder.MigrationsAssembly("SalesWebMvc")));
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
             services.AddScoped<SalesRecordService>();
+            services.AddScoped<CategoryAcessService>();
+
       }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +85,10 @@ namespace SalesWebMvc
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+
+            app.UseAuthentication();
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
