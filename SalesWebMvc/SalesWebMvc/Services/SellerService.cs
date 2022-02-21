@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Services.Exceptions;
 using System.Threading.Tasks;
+using SalesWebMvc.Models.ViewModels;
 
 namespace SalesWebMvc.Services
 {
@@ -68,6 +69,12 @@ namespace SalesWebMvc.Services
 
                 throw new DbConcurrencyException(e.Message);
             }
+        }
+        //--------------------------------------------------------------
+        public async Task<Seller> FindByEmailPass(LoginViewModel login)
+        {
+            return await _context.Seller
+                .FirstOrDefaultAsync(o => o.Email.Equals(login.Email) && o.Password.Equals(login.Password));
         }
         //--------------------------------------------------------------
     }

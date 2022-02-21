@@ -8,6 +8,9 @@ using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services.Exceptions;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SalesWebMvc.Controllers
 {
@@ -16,7 +19,7 @@ namespace SalesWebMvc.Controllers
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
         private readonly CategoryAcessService _categoryAcessService;
-        
+
 
 
         public SellersController(SellerService sellerService, DepartmentService departmentService, CategoryAcessService categoryAcessService)
@@ -29,17 +32,17 @@ namespace SalesWebMvc.Controllers
         public async Task<IActionResult> Index()
         {
             var department = await _departmentService.FindAllAsync();
-            
+
             var list = await _sellerService.FindAllAsync();
             var categoryAcess = await _categoryAcessService.FindAllAsync();
 
             var l = from s in list
                     join d in department on s.DepartmentId equals d.Id
                     join a in categoryAcess on s.CategoryAcessId equals a.Id
-                    select new Seller(s.Id, s.Name, s.Email,s.Password, s.BirthDate, s.BaseSalary, d, a);
-                                        
-                                   
-                    
+                    select new Seller(s.Id, s.Name, s.Email, s.Password, s.BirthDate, s.BaseSalary, d, a);
+
+
+
             var viewModel = new SellerFormDepartment { Sellers = list, Departments = department };
 
             return View(l);
@@ -62,15 +65,15 @@ namespace SalesWebMvc.Controllers
                 SellerFormViewModel viewModel = new SellerFormViewModel { Seller = seller, Departments = dep };
                 return View(viewModel);
             }
-           await _sellerService.InsertAsync(seller);
+            await _sellerService.InsertAsync(seller);
             return RedirectToAction(nameof(Index));
         }
         //-----------------------------------------------------------------
-        public async Task<IActionResult> Delete (int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não foi fornecido"});
+                return RedirectToAction(nameof(Error), new { message = "Id não foi fornecido" });
             }
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
@@ -87,14 +90,16 @@ namespace SalesWebMvc.Controllers
             try
             {
 
-               await _sellerService.RemoveAsync(id);
+                await _sellerService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch (IntegrityException e )
+            catch (IntegrityException e)
             {
 
-                return RedirectToAction(nameof(Error), new {
-                    message = "Esse vendedor não poder Excluído,  verifique se contém vendas " + e.Message });
+                return RedirectToAction(nameof(Error), new
+                {
+                    message = "Esse vendedor não poder Excluído,  verifique se contém vendas " + e.Message
+                });
             }
         }
         //-----------------------------------------------------------------
@@ -145,7 +150,7 @@ namespace SalesWebMvc.Controllers
             }
             try
             {
-               await _sellerService.UpdateAsync(seller);
+                await _sellerService.UpdateAsync(seller);
                 return RedirectToAction(nameof(Index));
             }
             catch (NotFoundException e)
@@ -167,10 +172,54 @@ namespace SalesWebMvc.Controllers
             };
             return View(viewModel);
         }
+        //------------------------------Exist-----------------------------------
+
         //------------------------------Login-----------------------------------
-        public IActionResult Login()
+
+        public async Task<IActionResult> Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+
+                await HttpContext.SignOutAsync();
+                HttpContext.Session.Clear();
+                return RedirectToAction(nameof(Login));
+            }
             return View();
+        }
+
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var obj = await _sellerService.FindByEmailPass(user);
+
+                if (obj != null)
+                {
+                    HttpContext.Session.SetInt32("Id", obj.Id);
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Email, obj.Email)
+                     };
+
+                    var userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            return View();
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Login));
         }
     }
 }

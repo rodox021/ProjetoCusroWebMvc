@@ -1,14 +1,14 @@
-﻿@model SalesWebMvc.Models.Seller
+﻿@model SalesWebMvc.Models.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div class="">
-    <div class="alert alert-danger">
 
+<div class="bloco-login">
+    <div class="bg-info bloco-login-dviesq">
+        <h2 class="alert modal-title">@ViewData["Title"]</h2>
     </div>
-    <div class="row">
+    <div class=" col-md-6">
         <form asp-action="Login">
 
             <div class="form-group">
@@ -24,7 +24,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Login</button>
-            <a asp-action="Registro" asp-controller="User">Não Sou Cadastrado</a>
+            @*<a asp-action="Registro" asp-controller="User">Não Sou Cadastrado</a>*@
         </form>
     </div>
 </div>

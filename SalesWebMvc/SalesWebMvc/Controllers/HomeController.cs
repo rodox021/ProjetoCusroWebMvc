@@ -12,6 +12,9 @@ namespace SalesWebMvc.Controllers
     {
         public IActionResult Index()
         {
+
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Sellers");
             return View();
         }
 
